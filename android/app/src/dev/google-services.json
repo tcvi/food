@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "214654648277",
+    "project_id": "vtit-6d011",
+    "storage_bucket": "vtit-6d011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214654648277:android:770664643544eb2741475c",
+        "android_client_info": {
+          "package_name": "com.vi.fl.ad.food_app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214654648277-28bb2hbvuasc70rbeeo667uhi9jidepg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClzDqasAZttAFzy9hA_JJ3kQ0y5Q-EZiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214654648277-28bb2hbvuasc70rbeeo667uhi9jidepg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "214654648277-1006b418s4bovm8ihbtqmn11ki2nf23c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tcv.ft.foodapp.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
