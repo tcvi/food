@@ -52,7 +52,7 @@ class AppImageWidget extends StatelessWidget {
       );
       if (borderRadius != null) {
         return ClipRRect(
-          borderRadius: borderRadius,
+          borderRadius: borderRadius!,
           child: imageWidget,
         );
       }
