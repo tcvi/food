@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -51,8 +51,8 @@ android {
         applicationId "com.vi.fl.ad.food_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 22
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -86,7 +86,7 @@ android {
             resValue "string", "app_name", "VTit"
             versionCode 1
             versionName "1.0.0"
-            flutter.target "lib/main_dev.dart"
+            flutter.target "lib/main_prod.dart"
         }
     }
 
@@ -94,24 +94,24 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
         // add the code from below line.
-        applicationVariants.all{ variant ->
-                variant.outputs.all {
-//                        // on below line we are specifying our app name.
-                        project.ext { appName = 'VTit' }
-                        // on below line we are adding the formatted date to our apk file name.
-                        def formattedDate = new Date().format('yyyyMMdd.HHmm')
-                        // on below line we are creating a new name for our apk.
-                        def newName = outputFile.name
-                        // on below line we are replacing our previous name with our app name.
-                        newName = newName.replace("app-", "$project.ext.appName-")
-                        // on below line we are replacing -release with our formatted date.
-                        newName = newName.replace("-release", "-release-" + formattedDate)
-                        // at last we are setting our apk name to it.
-                        outputFileName  = newName
-                }
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                // Define your app name
+                def appName = 'VTit'
+                // Get the current date and format it
+                def formattedDate = new Date().format('yyMMddHHmm')
+                // Create a new name for the APK
+                def newName = output.outputFileName
+                // Replace "app-" with your app name
+                newName = newName.replace("app-", "${appName}-")
+                // Replace "-release" with "-release-" and the formatted date
+                newName = newName.replace("-${variant.buildType.name}", "-${variant.buildType.name}-${formattedDate}")
+                // Set the new output file name
+                output.outputFileName = newName
+            }
         }
     }
 }
