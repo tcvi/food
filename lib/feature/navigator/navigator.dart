@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
+import 'package:config_env/domain/repository/storage_data.dart';
 import 'package:config_env/feature/food_app/detail/detail_screen.dart';
 import 'package:config_env/feature/login/login_screen.dart';
 import 'package:config_env/feature/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../food_app/business/business_screen.dart';
@@ -10,12 +12,20 @@ import '../food_app/home/home_screen.dart';
 import '../food_app/home_app/home_app_screen.dart';
 import '../food_app/school/school_screen.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  navigatorKey: _rootNavigatorKey,
+  navigatorKey: rootNavigatorKey,
+  redirect: (context, state) {
+    final storageData = GetIt.I.get<StorageData>();
+    final token = storageData.token;
+    if (token.isEmpty) {
+      return "/login";
+    }
+    return state.path;
+  },
   routes: [
     GoRoute(
       path: '/',
@@ -29,6 +39,23 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: '/home',
+          routes: [
+            GoRoute(
+                parentNavigatorKey: rootNavigatorKey,
+                path: 'detail',
+                name: 'detail',
+                builder: (_, state) => const DetailScreen(),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: rootNavigatorKey,
+                    path: 'take_picture',
+                    name: 'AAAAA',
+                    builder: (_, state) {
+                      return const SizedBox();
+                    },
+                  ),
+                ]),
+          ],
           pageBuilder: (context, state) {
             return CustomTransitionPage(
               child: const HomeScreen(),
@@ -74,22 +101,7 @@ final router = GoRouter(
         ),
       ],
     ),
-    GoRoute(
-        parentNavigatorKey: _rootNavigatorKey,
-        path: '/detail',
-        builder: (_, state) => const DetailScreen(),
-        routes: [
-          GoRoute(
-            parentNavigatorKey: _rootNavigatorKey,
-            path: 'take_picture',
-            name: 'AAAAA',
-            builder: (_, state) {
-              CameraDescription camera = state.extra as CameraDescription;
-              return SizedBox();
-              // return TakePictureScreen(camera: camera);
-            },
-          ),
-        ]),
+
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),

@@ -13,7 +13,6 @@ class LocalDataManager extends StorageData {
   @override
   Future clearAll() => _sharedPreferences.clear();
 
-
   @override
   Future<bool> remove(String key) => _sharedPreferences.remove(key);
 

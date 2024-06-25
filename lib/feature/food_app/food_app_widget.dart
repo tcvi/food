@@ -1,5 +1,4 @@
 import 'package:config_env/domain/utils/enums.dart';
-import 'package:config_env/feature/splash/splash_screen.dart';
 import 'package:config_env/resources/colors/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,10 +16,19 @@ class FoodAppWidget extends StatefulWidget {
 }
 
 class _FoodAppWidgetState extends State<FoodAppWidget> {
+  late final FoodAppBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = FoodAppBloc(widget.themeMode);
+    bloc.add(HandleNotifyFromTerminal());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FoodAppBloc>(
-      create: (_) => FoodAppBloc(widget.themeMode),
+      create: (_) => bloc,
       child: BlocBuilder<FoodAppBloc, FoodAppState>(
         builder: (context, state) {
           return MaterialApp.router(

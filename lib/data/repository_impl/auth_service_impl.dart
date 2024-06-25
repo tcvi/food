@@ -18,7 +18,6 @@ class AuthServiceImpl extends HttpAPI implements AuthService {
   }
 }
 
-
 class AuthUrl extends BaseUrl {
   @override
   String get dev => "http://api.ow.teqn.asia/eazy-process/v1";
