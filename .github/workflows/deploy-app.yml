@@ -1,0 +1,62 @@
+name: Deploy Lambda
+
+on:
+  push:
+    tags:
+      - 'dev_*'
+      - 'prod_*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_DEFAULT_REGION: ap-northeast-1
+
+    permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.18'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+#      - name: Build binaries
+#        run: |
+#          make clean
+#          make build
+
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          region: ${{ env.AWS_DEFAULT_REGION }}
+
+#      - name: configure aws credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          role-to-assume: ROLE-TO-ASSUME
+#          role-session-name: samplerolesession
+#          aws-region: ${{ env.AWS_REGION }}
+#
+      - name: Deploy to Lambda
+        run: |
+          if [[ "${{ github.ref_name }}" == dev_* ]]; then
+            echo "sls deploy --stage dev --verbose"
+          elif [[ "${{ github.ref_name }}" == prod_* ]]; then
+               echo "sls deploy --stage prod --verbose"
+          fi
