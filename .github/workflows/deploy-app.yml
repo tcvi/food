@@ -31,15 +31,15 @@ jobs:
           echo "Go version:"
           go version
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Log Node.js version
-        run: |
-          echo "Node.js version:"
-          node -v
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#
+#      - name: Log Node.js version
+#        run: |
+#          echo "Node.js version:"
+#          node -v
 
       - name: Install Serverless Framework
         run: npm install -g serverless
