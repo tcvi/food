@@ -46,12 +46,12 @@ jobs:
 #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #          region: ${{ env.AWS_DEFAULT_REGION }}
 
-#      - name: configure aws credentials
-#        uses: aws-actions/configure-aws-credentials@v4
-#        with:
-#          role-to-assume: ROLE-TO-ASSUME
-#          role-session-name: samplerolesession
-#          aws-region: ${{ env.AWS_REGION }}
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ROLE-TO-ASSUME
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
 #
       - name: Deploy to Lambda
         run: |
